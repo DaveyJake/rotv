@@ -4,14 +4,12 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package rugbyontv
+ * @package Rugby On TV
  */
 
 if ( ! function_exists( 'rotv_paging_nav' ) ) :
 /**
  * Display navigation to next/previous set of posts when applicable.
- *
- * @return void
  */
 function rotv_paging_nav() {
 	// Don't print empty markup if there's only one page.
@@ -40,8 +38,6 @@ endif;
 if ( ! function_exists( 'rotv_post_nav' ) ) :
 /**
  * Display navigation to next/previous post when applicable.
- *
- * @return void
  */
 function rotv_post_nav() {
 	// Don't print empty markup if there's nowhere to navigate.
@@ -55,75 +51,15 @@ function rotv_post_nav() {
 	<nav class="navigation post-navigation" role="navigation">
 		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'rotv' ); ?></h1>
 		<div class="nav-links">
-
-			<?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'rotv' ) ); ?>
-			<?php next_post_link(     '%link', _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link',     'rotv' ) ); ?>
-
+			<?php
+				previous_post_link( '<div class="nav-previous">%link</div>', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'rotv' ) );
+				next_post_link(     '<div class="nav-next">%link</div>',     _x( '%title <span class="meta-nav">&rarr;</span>', 'Next post link',     'rotv' ) );
+			?>
 		</div><!-- .nav-links -->
 	</nav><!-- .navigation -->
 	<?php
 }
 endif;
-
-if ( ! function_exists( 'rotv_comment' ) ) :
-/**
- * Template for comments and pingbacks.
- *
- * Used as a callback by wp_list_comments() for displaying the comments.
- */
-function rotv_comment( $comment, $args, $depth ) {
-	$GLOBALS['comment'] = $comment;
-
-	if ( 'pingback' == $comment->comment_type || 'trackback' == $comment->comment_type ) : ?>
-
-	<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
-		<div class="comment-body">
-			<?php _e( 'Pingback:', 'rotv' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( 'Edit', 'rotv' ), '<span class="edit-link">', '</span>' ); ?>
-		</div>
-
-	<?php else : ?>
-
-	<li id="comment-<?php comment_ID(); ?>" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?>>
-		<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-			<footer class="comment-meta">
-				<div class="comment-author vcard">
-					<?php if ( 0 != $args['avatar_size'] ) { echo get_avatar( $comment, $args['avatar_size'] ); } ?>
-					<?php printf( __( '%s <span class="says">says:</span>', 'rotv' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
-				</div><!-- .comment-author -->
-
-				<div class="comment-metadata">
-					<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
-						<time datetime="<?php comment_time( 'c' ); ?>">
-							<?php printf( _x( '%1$s at %2$s', '1: date, 2: time', 'rotv' ), get_comment_date(), get_comment_time() ); ?>
-						</time>
-					</a>
-					<?php edit_comment_link( __( 'Edit', 'rotv' ), '<span class="edit-link">', '</span>' ); ?>
-				</div><!-- .comment-metadata -->
-
-				<?php if ( '0' == $comment->comment_approved ) : ?>
-				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'rotv' ); ?></p>
-				<?php endif; ?>
-			</footer><!-- .comment-meta -->
-
-			<div class="comment-content">
-				<?php comment_text(); ?>
-			</div><!-- .comment-content -->
-
-			<?php
-				comment_reply_link( array_merge( $args, array(
-					'add_below' => 'div-comment',
-					'depth'     => $depth,
-					'max_depth' => $args['max_depth'],
-					'before'    => '<div class="reply">',
-					'after'     => '</div>',
-				) ) );
-			?>
-		</article><!-- .comment-body -->
-
-	<?php
-	endif;
-}
-endif; // ends check for rotv_comment()
 
 if ( ! function_exists( 'rotv_posted_on' ) ) :
 /**
@@ -157,21 +93,27 @@ endif;
 
 /**
  * Returns true if a blog has more than 1 category.
+ *
+ * @return bool
  */
 function rotv_categorized_blog() {
-	if ( false === ( $all_the_cool_cats = get_transient( 'all_the_cool_cats' ) ) ) {
+	if ( false === ( $all_the_cool_cats = get_transient( 'rotv_categories' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
 		$all_the_cool_cats = get_categories( array(
+			'fields'     => 'ids',
 			'hide_empty' => 1,
+
+			// We only need to know if there is more than one category.
+			'number'     => 2,
 		) );
 
 		// Count the number of categories that are attached to the posts.
 		$all_the_cool_cats = count( $all_the_cool_cats );
 
-		set_transient( 'all_the_cool_cats', $all_the_cool_cats );
+		set_transient( 'rotv_categories', $all_the_cool_cats );
 	}
 
-	if ( '1' != $all_the_cool_cats ) {
+	if ( $all_the_cool_cats > 1 ) {
 		// This blog has more than 1 category so rotv_categorized_blog should return true.
 		return true;
 	} else {
@@ -185,7 +127,7 @@ function rotv_categorized_blog() {
  */
 function rotv_category_transient_flusher() {
 	// Like, beat it. Dig?
-	delete_transient( 'all_the_cool_cats' );
+	delete_transient( 'rotv_categories' );
 }
 add_action( 'edit_category', 'rotv_category_transient_flusher' );
 add_action( 'save_post',     'rotv_category_transient_flusher' );

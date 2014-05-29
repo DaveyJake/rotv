@@ -1,8 +1,8 @@
 <?php
 /**
- * rugbyontv Theme Customizer
+ * Rugby On TV Theme Customizer
  *
- * @package rugbyontv
+ * @package Rugby On TV
  */
 
 /**

@@ -12,7 +12,7 @@
 	<?php endif; // End header image check. ?>
 
  *
- * @package rugbyontv
+ * @package Rugby On TV
  */
 
 /**
@@ -21,8 +21,6 @@
  * @uses rotv_header_style()
  * @uses rotv_admin_header_style()
  * @uses rotv_admin_header_image()
- *
- * @package rugbyontv
  */
 function rotv_custom_header_setup() {
 	add_theme_support( 'custom-header', apply_filters( 'rotv_custom_header_args', array(
