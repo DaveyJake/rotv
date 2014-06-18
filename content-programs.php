@@ -15,17 +15,28 @@ $args = array(
 
 ?>
 
-	<ul class="rugby-programs no-bullet">
+	<div class="rugby-programs no-bullet">
 	
-		<li class="program-list">
+		<div class="program-list">
 			<section class="program-listings">
-				<ul class="programs no-bullet small-block-grid-1">
+				<table id="rotv-schedule" class="dataTable">
+					
+					<thead class="program-menu top-bar-section" data-topbar>
+						<tr>
+							<th class="date" rowspan="1" colspan="1">Date</th>
+							<th class="time" rowspan="1" colspan="1">Time</th>
+							<th class="program" rowspan="1" colspan="1">Program</th>
+							<th class="description" rowspan="1" colspan="1">Description</th>
+							<th class="network" rowspan="1" colspan="1">Network</th>
+						</tr>
+					</thead>
+
 					<?php $loop = new WP_Query($args);
 					while($loop->have_posts()) : $loop->the_post(); ?>
 
-					<li class="program-wrapper row">
+					<tr class="program-wrapper">
 					
-						<div class="date column">
+						<td class="date">
 							<?php
 								date_default_timezone_set('UTC-4');
 								$date = get_field('date_picker');
@@ -46,11 +57,11 @@ $args = array(
 									echo $month_name . ' ' . $d;
 								}							
 							?>
-						</div>
+						</td>
 
-						<div class="time <?php echo get_field('live'); ?> column"><?php $time = get_field('time'); $ampm = substr($time, -2, 2); if(substr($time, -6, 4) == ':00 ' && $ampm){ $time = preg_replace('/[:00]{3}\s[A-Z]{2}/', '', $time.strtolower($ampm)); echo $time; } else { $time = preg_replace('/\s[A-Z]{2}/', '', $time.strtolower($ampm)); echo $time; } ?></div>
+						<td class="time <?php echo get_field('live'); ?>"><?php $time = get_field('time'); $ampm = substr($time, -2, 2); if(substr($time, -6, 4) == ':00 ' && $ampm){ $time = preg_replace('/[:00]{3}\s[A-Z]{2}/', '', $time.strtolower($ampm)); echo $time; } else { $time = preg_replace('/\s[A-Z]{2}/', '', $time.strtolower($ampm)); echo $time; } ?></td>
 						
-						<div class="program <?php echo get_field('program_type'); ?> column">
+						<td class="program <?php echo get_field('program_type'); ?>">
 							<?php
 								if(get_field('program_type') == "competition"){
 									$comp_field = get_field_object('competition');
@@ -65,9 +76,9 @@ $args = array(
 									echo $prog_label;
 								}
 							?>
-						</div>
+						</td>
 						
-						<div class="program-description program-title column">
+						<td class="program-description program-title">
 						<?php
 							the_title();
 							$trailer = get_field('trailer');
@@ -75,9 +86,9 @@ $args = array(
 								echo '<span class="trailer"> · <a href="' . $trailer . '">Watch Trailer</a></span>'; 
 							}
 						?>
-						</div>
+						</td>
 						
-						<div class="network column">
+						<td class="network">
 							<?php
 								$network_list = get_field_object('network');
 								$network_names = get_field('network');
@@ -85,16 +96,17 @@ $args = array(
 								echo $network;
 
 							?>
-						</div>
+						</td>
 
-					</li>
-					
+					</tr>
+				
 					<?php endwhile; wp_reset_postdata(); ?>
-				</ul>
+
+				</table>
 
 			</section>
-		</li>
+		</div>
 
-	</ul>
+	</div>
 
 <?php get_footer(); ?>

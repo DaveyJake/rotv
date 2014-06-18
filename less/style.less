@@ -1,0 +1,205 @@
+@import "//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css";
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:	Rugby On TV
+Version:	1.0
+
+1. Imports
+2. Global Overrides
+3. Responsive
+
+--------------------------------------------------------------------*/
+
+/* 1. Imports  -----------------------------------------------------*/
+
+//vendor
+@import "vendor/reset.less";
+@import "vendor/foundation.less";
+@import "vendor/font-awesome.less";
+@import "vendor/less-mixins.less";
+@import "vendor/jquery.fancybox.less";
+
+
+/*------------------------------------------
+
+	2. Global Overrides
+
+--------------------------------------------*/
+@media screen {
+
+	body:not(.mobile) {
+		font-family: 'FontAwesome';
+		font-size: 16px;
+		-webkit-font-smoothing: antialiased !important;
+
+		.program-mobile, .date-divider {
+			display: none;	
+		}
+
+		.top-bar-section {
+			background: #001830;
+			
+			th {
+				color: #fff !important;
+			}
+		}
+
+		.date {
+			max-width: 10%;				
+		}		
+		.time {
+			max-width: 12%;
+		}
+		.program {
+			max-width: 21%;
+		}
+		.program-description {
+			max-width: 32%;
+		}
+		.network {
+			max-width: 24%;
+		}
+		
+		.rugby-programs {
+			margin-top: 1.25%;
+
+			.program-list {
+				margin: 0;
+				padding-left:0;
+				padding-right:0;
+			
+				.program-wrapper {
+					width: 100%;
+					max-width: 100%;
+					padding-left: 0;
+					position: relative;
+
+					td {
+						white-space: nowrap;
+					}
+
+					.time {
+						text-transform: uppercase;
+					}
+
+					.live:after {
+						content: "LIVE";
+					  	background: #f21a1a;
+					  	color: #fff;
+					  	font-size: 100%;
+					  	padding: 0 2px;
+					  	-moz-padding-start: 2px;
+					  	-moz-padding-end: 2px;
+					  	position: relative;
+					  	bottom: 2px;
+					  	left: 3px;
+					}
+				}
+
+				#rotv-schedule_wrapper {
+					div.row {
+						display: none !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/*------------------------------------------
+
+	3. Responsive
+
+--------------------------------------------*/
+
+@media (max-width: 877px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: auto;*/
+			.live:after {
+				font-size: 0.5rem !important;
+				padding: 0 0.1rem 0 0.187rem !important;
+				top: -0.07rem !important;
+				letter-spacing: 1px !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 878px) and (max-width: 972px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: 25.5px;*/
+			.live:after {
+				font-size: 0.49rem !important;
+				padding: 0 0.1rem 0 0.187rem !important;
+				bottom: 1px !important;
+				letter-spacing: 0.05rem !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 973px) and (max-width: 1224px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: 31px;*/
+			.live:after {
+				font-size: 60% !important;
+				padding: 0.033rem 2px !important;
+				bottom: 2px !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 1225px) and (max-width: 1294px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: 34px;*/
+			.live:after {
+				font-size: 61% !important;
+				padding: 0rem 2px !important;
+				bottom: 2px !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 1295px) and (max-width: 1364px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: 37px;*/
+			.live:after {
+				font-size: 60% !important;
+				padding: 0 2px !important;
+				bottom: 2px !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 1365px) and (max-width: 1433px) {
+	body:not(.mobile) {
+		.program-wrapper {
+			/*height: 40px;*/
+			.live:after {
+				font-size: 64% !important;
+				padding: 0 2px !important;
+				bottom: 2px !important;
+			}
+		}
+	}
+}
+
+@media (min-width: 1434px) {
+	body:not(.mobile) {
+		.live:after {
+			font-size: 60% !important;
+			padding: 0.03rem 2px 0.02rem 2px !important;
+			bottom: 2px !important;
+		}
+	}
+}

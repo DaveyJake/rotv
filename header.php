@@ -16,6 +16,9 @@
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
 <?php wp_head(); ?>
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -23,11 +26,11 @@
 
 	<header id="masthead" class="site-header" role="banner">
 		
-		<nav class="top-bar" data-topbar>
+		<!-- nav class="top-bar" data-topbar>
 
 			<section class="top-bar-section">
 
-				<ul class="program-menu row small-block-grid-10">
+				<ul class="program-menu">
 					<li class="name column">Date</li>
 					<li class="divider"></li>
 					<li class="name column">Time</li>
@@ -62,7 +65,7 @@
 
 			</section>
 
-		</nav>
+		</nav -->
 		
 	</header><!-- #masthead -->
 

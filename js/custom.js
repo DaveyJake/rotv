@@ -1,6 +1,6 @@
 (function($){
 
-	$time = $('.time');
+	$time = $('td.time');
 	$time.each(function(){
 		var $this = $(this);
 		var timeText = $this.text();
